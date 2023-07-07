@@ -1,16 +1,18 @@
-import { useHello } from './hooks/useHello';
-import kirby from '../public/kirby.jpg';
-import ArticleCard from './components/ArticleCard';
+import { ArticleCard } from './components/ArticleCard';
+import { AddArticle } from './components/AddArticle';
 
 function App() {
-  const [hello, sayHello] = useHello();
-
   return (
     <>
-      <h1>{hello} Zzap!</h1>
-      <img src={kirby}></img>
-      <button onClick={sayHello}>Hello!</button>
-      <ArticleCard title="sample" contentPreview="이건 콘텐트 미리보기 내용인데 길면 ...으로 짤리게 만들거야" />
+      <h1>HEllo</h1>
+      <AddArticle />
+      <ArticleCard
+        key={'123'}
+        title={'마법천자문'}
+        description={'삼장과 원숭이, 그리고 조제'}
+        author="김테스트1"
+        createdAt="2023-07-02"
+      />
     </>
   );
 }
