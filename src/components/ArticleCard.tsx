@@ -1,15 +1,76 @@
+import { useQuery } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { GET_ARTICLES } from '../api/graphql';
+
+type Article = {
+  articleID: string;
+  title: string;
+  content: string;
+  author: string;
+  createdAt: string;
+};
 
 type ArticleCardProps = {
+  articleID: string;
   title: string;
   description: string;
   author: string;
   createdAt: string;
 };
 
-export function ArticleCard({ title, description, author, createdAt }: ArticleCardProps) {
+type ArticleListProps = {
+  showAdder: boolean;
+};
+
+export function ArticleList({ showAdder }: ArticleListProps) {
+  const { data: { articles } = {}, loading, error } = useQuery(GET_ARTICLES);
+
+  if (error) throw error;
+  if (loading) <div>loding...</div>;
   return (
-    <ArticleCardWrapper>
+    <ArticleContainer>
+      {showAdder && <AddArticle />}
+      {articles?.map((article: Article) => (
+        <ArticleCard
+          key={article.articleID}
+          articleID={article.articleID}
+          title={article.title}
+          description={article.content}
+          author={'데베에아직없어'}
+          createdAt={article.createdAt}
+        />
+      ))}
+    </ArticleContainer>
+  );
+}
+
+const ArticleContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 70rem;
+`;
+
+export function AddArticle() {
+  const nav = useNavigate();
+
+  return (
+    <ArticleCardWrapper onClick={() => nav('post')}>
+      <AdderIcon>+</AdderIcon>
+    </ArticleCardWrapper>
+  );
+}
+
+const AdderIcon = styled.span`
+  text-align: center;
+  font-size: 15rem;
+`;
+
+export function ArticleCard({ articleID, title, description, author, createdAt }: ArticleCardProps) {
+  const nav = useNavigate();
+
+  return (
+    <ArticleCardWrapper onClick={() => nav(`article/${articleID}`)}>
       <Title>{title}</Title>
       <Description>{description}...</Description>
       <Author>{`by ${author}`}</Author>
@@ -19,7 +80,7 @@ export function ArticleCard({ title, description, author, createdAt }: ArticleCa
 }
 
 const ArticleCardWrapper = styled.div`
-  width: 20rem;
+  width: calc(100% / 3.3);
   height: 25rem;
   border-radius: 4px;
   background-color: ${(props) => props.theme.bg2};
@@ -29,6 +90,8 @@ const ArticleCardWrapper = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  user-select: none;
 `;
 
 const Title = styled.h4`
