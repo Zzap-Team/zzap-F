@@ -34,6 +34,8 @@ export function GithubAuth() {
     const authCode = params.get('code');
     login({ variables: { authCode } })
       .then(({ data: { signinWithGithub: tokens } }) => {
+        console.log(tokens);
+
         store.user({
           accessToken: tokens.accessToken,
           refreshToken: tokens.refreshToken,

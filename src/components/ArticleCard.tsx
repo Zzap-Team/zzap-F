@@ -23,28 +23,6 @@ type ArticleListProps = {
   showAdder: boolean;
 };
 
-export function ArticleList({ showAdder }: ArticleListProps) {
-  const { data: { articles } = {}, loading, error } = useQuery(GET_ARTICLES);
-
-  if (error) throw error;
-  if (loading) <div>loding...</div>;
-  return (
-    <ArticleContainer>
-      {showAdder && <AddArticle />}
-      {articles?.map((article: Article) => (
-        <ArticleCard
-          key={article.articleID}
-          articleID={article.articleID}
-          title={article.title}
-          description={article.content}
-          author={'데베에아직없어'}
-          createdAt={article.createdAt}
-        />
-      ))}
-    </ArticleContainer>
-  );
-}
-
 const ArticleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -66,46 +44,106 @@ const AdderIcon = styled.span`
   font-size: 15rem;
 `;
 
-export function ArticleCard({ articleID, title, description, author, createdAt }: ArticleCardProps) {
+export function ArticleCard({ articleID, title, content, author, createdAt, img = '' }: ArticleCardProps) {
   const nav = useNavigate();
 
   return (
-    <ArticleCardWrapper onClick={() => nav(`article/${articleID}`)}>
-      <Title>{title}</Title>
-      <Description>{description}...</Description>
-      <Author>{`by ${author}`}</Author>
-      <CreatedAt>{createdAt}</CreatedAt>
+    <ArticleCardWrapper onClick={() => nav(`/article/${articleID}`)}>
+      {img !== '' && (
+        <Image>
+          <img src={img} alt="이미지 영역"></img>
+        </Image>
+      )}
+      <ArticleInfo>
+        <Title>{title}</Title>
+        <Content>{content}</Content>
+        <CreatedAt>{createdAt}</CreatedAt>
+      </ArticleInfo>
+      <UserInfo>
+        <Author>{`by ${author}`}</Author>
+      </UserInfo>
     </ArticleCardWrapper>
   );
 }
 
 const ArticleCardWrapper = styled.div`
-  width: calc(100% / 3.3);
-  height: 25rem;
-  border-radius: 4px;
+  width: 340px;
+  height: 400px;
+  border-radius: 10px;
   background-color: ${(props) => props.theme.bg2};
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
-  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
-  margin: 1rem;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  margin: 21px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.3);
+  }
+`;
 
-  user-select: none;
+const Image = styled.div`
+  width: 100%;
+  padding-top: 60%;
+  overflow: hidden;
+  position: relative;
+  img {
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+const ArticleInfo = styled.div`
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const UserInfo = styled.div`
+  margin-top: auto;
+  border-top: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
 `;
 
 const Title = styled.h4`
-  text-align: center;
+  text-align: left;
+  overflow: hidden;
+  font-size: 24px;
+  margin: 0px 0px 0.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
-const Description = styled.p`
-  text-align: center;
+const Content = styled.p`
+  text-align: left;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.2rem;
+  height: 3.6rem;
 `;
 
 const Author = styled.p`
-  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const CreatedAt = styled.p`
-  text-align: center;
+  margin-top: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

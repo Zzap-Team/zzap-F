@@ -7,6 +7,12 @@ export const GET_ARTICLES = gql`
       title
       content
       createdAt
+      updatedAt
+      author {
+        uid
+        name
+        email
+      }
     }
   }
 `;
@@ -18,6 +24,12 @@ export const GET_ARTICLE = gql`
       title
       content
       createdAt
+      updatedAt
+      author {
+        uid
+        name
+        email
+      }
     }
   }
 `;
@@ -51,8 +63,16 @@ export const LOGIN = gql`
 export const GITHUB_LOGIN = gql`
   mutation GithubLogin($authCode: String!) {
     signinWithGithub(oauthSigninDTO: { code: $authCode }) {
-      accessToken
-      refreshToken
+      statusCode
+      message
+      accessToken {
+        token
+        maxAge
+      }
+      refreshToken {
+        token
+        maxAge
+      }
     }
   }
 `;
