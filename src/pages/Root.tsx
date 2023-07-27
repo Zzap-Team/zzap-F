@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ArticleList } from '../components/ArticleCard';
+import { ArticleList } from '../components/ArticleList';
 import { useReactiveVar } from '@apollo/client';
 import { store } from '../apollo';
 import { config } from '../config';
