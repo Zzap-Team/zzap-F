@@ -1,11 +1,12 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, createHttpLink, makeVar, from } from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, makeVar, from } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { config } from './config';
 
 const authLink = setContext((request, prevContext) => {
+  const { accessToken } = store.user();
   return {
     headers: {
-      ...prevContext.headers,
-      authorization: `Bearer ${'sampletoken'}`,
+      authorization: `Bearer ${accessToken}`,
     },
   };
 });
@@ -14,21 +15,19 @@ const debugLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-const directionalLink = new ApolloLink((operation, forward) => {
-  return forward(operation);
-}).split(
+const directionalLink = new ApolloLink((operation, forward) => forward(operation)).split(
   (operation) => operation.getContext().auth === true,
   // resource
   from([
     authLink,
     new HttpLink({
-      uri: 'http://localhost:3000/graphql',
+      uri: CONFIG.API_URL,
       credentials: 'include',
     }),
   ]),
-  // token
+  // auth
   new HttpLink({
-    uri: 'http://localhost:3000/graphql',
+    uri: CONFIG.API_URL,
     credentials: 'include',
   }),
 );
@@ -40,6 +39,7 @@ export const client = new ApolloClient({
 
 export const store = {
   user: makeVar({
+    loggedIn: false,
     accessToken: undefined,
     refreshToken: undefined,
   }),

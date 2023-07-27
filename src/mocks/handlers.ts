@@ -56,7 +56,8 @@ export const handlers = [
       }),
     );
   }),
-  graphql.mutation('AddArticle', (req, res, ctx) => {
+  graphql.mutation('CreateArticle', (req, res, ctx) => {
+    console.log('create', req);
     return res(
       ctx.data({
         article: {

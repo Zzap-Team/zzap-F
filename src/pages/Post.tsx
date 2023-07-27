@@ -18,6 +18,7 @@ export default function Post() {
       <Content value={content} onChange={(e) => setContent(e.target.value)} />
       <button
         onClick={async () => {
+          console.log('add');
           const { data } = await addArticle({
             variables: {
               title,

@@ -3,8 +3,8 @@ import Root from './pages/Root';
 import Login, { GithubAuth } from './pages/Login';
 import Post from './pages/Post';
 import Article from './pages/Article';
-import { client } from './apollo';
-import { GITHUB_LOGIN, LOGIN } from './api/graphql';
+import { ProtectRoute } from './components/Utils';
+import { store } from './apollo';
 
 const router = createBrowserRouter([
   {
@@ -13,11 +13,19 @@ const router = createBrowserRouter([
   },
   {
     path: '/login/github',
-    element: <GithubAuth />,
+    element: (
+      <ProtectRoute when={store.user().loggedIn === true} to="/">
+        <GithubAuth />
+      </ProtectRoute>
+    ),
   },
   {
     path: '/post',
-    element: <Post />,
+    element: (
+      <ProtectRoute when={store.user().loggedIn === false} to="/login/github">
+        <Post />
+      </ProtectRoute>
+    ),
   },
   {
     path: '/article/:id',

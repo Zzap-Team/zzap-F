@@ -35,9 +35,11 @@ export function GithubAuth() {
     login({ variables: { authCode } })
       .then(({ data: { signinWithGithub: tokens } }) => {
         store.user({
+          loggedIn: true,
           accessToken: tokens.accessToken,
           refreshToken: tokens.refreshToken,
         });
+        window.localStorage.setItem('LOGGED_IN', 'true');
         nav('/');
       })
       .catch((error) => {
