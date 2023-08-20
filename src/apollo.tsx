@@ -1,31 +1,18 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, makeVar, from } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { config } from './config';
-
-const authLink = setContext((request, prevContext) => {
-  const { accessToken } = store.user();
-  return {
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  };
-});
-
-const debugLink = new ApolloLink((operation, forward) => {
-  return forward(operation);
-});
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, from } from '@apollo/client';
+import { CONFIG } from './config';
+import refreshAccessTokenLink from './apollo/links/refreshAccessToken';
+import authLink from './apollo/links/auth';
 
 const directionalLink = new ApolloLink((operation, forward) => forward(operation)).split(
   (operation) => operation.getContext().auth === true,
-  // resource
   from([
+    refreshAccessTokenLink,
     authLink,
     new HttpLink({
       uri: CONFIG.API_URL,
       credentials: 'include',
     }),
   ]),
-  // auth
   new HttpLink({
     uri: CONFIG.API_URL,
     credentials: 'include',
@@ -36,11 +23,3 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: directionalLink,
 });
-
-export const store = {
-  user: makeVar({
-    loggedIn: false,
-    accessToken: undefined,
-    refreshToken: undefined,
-  }),
-};

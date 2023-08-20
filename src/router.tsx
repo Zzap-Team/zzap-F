@@ -5,6 +5,7 @@ import Post from './pages/Post';
 import Article from './pages/Article';
 import { ProtectRoute } from './components/Utils';
 import { store } from './apollo';
+import Dev from './dev';
 
 const router = createBrowserRouter([
   {
@@ -12,17 +13,17 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
+    path: '/login',
+    element: <Login />,
+  },
+  {
     path: '/login/github',
-    element: (
-      <ProtectRoute when={store.user().loggedIn === true} to="/">
-        <GithubAuth />
-      </ProtectRoute>
-    ),
+    element: <GithubAuth />,
   },
   {
     path: '/post',
     element: (
-      <ProtectRoute when={store.user().loggedIn === false} to="/login/github">
+      <ProtectRoute when={false} to="/login/github">
         <Post />
       </ProtectRoute>
     ),
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: '/article/:id',
     element: <Article />,
+  },
+  {
+    path: '/dev',
+    element: <Dev></Dev>,
   },
 ]);
 

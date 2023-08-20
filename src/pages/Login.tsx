@@ -1,28 +1,27 @@
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
-import { Navigate, createSearchParams, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
-import { store } from '../apollo';
+import { Navigate, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { GITHUB_LOGIN, LOGIN } from '../api/graphql';
+import { GET_ME, GITHUB_LOGIN } from '../api/graphql';
+import useAuthQuery from '../hooks/useAuthQuery';
+import { user } from '../apollo/store';
 
 export default function Login() {
-  // const user = useReactiveVar(store.user);
-  const login = useLoaderData();
+  const nav = useNavigate();
+  const { data } = useAuthQuery(GET_ME);
 
-  return (
-    <button
-      onClick={() => {
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${
-          import.meta.env.VITE_CLIENT_ID
-        }&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}`;
-      }}
-    >
-      test
-    </button>
-  );
-  if (loading) return <div>로그인...</div>;
-  if (error) return <div>error: {error.message}</div>;
-  // return <></>;
-  // return <Navigate to="/"></Navigate>;
+  useEffect(() => {
+    if (data) {
+      console.log('data!!', data);
+      const newUser = {
+        ...user(),
+        name: data.me.name,
+      };
+      user(newUser);
+      nav('/');
+    }
+  }, [data, nav]);
+
+  return <></>;
 }
 
 export function GithubAuth() {
@@ -34,26 +33,20 @@ export function GithubAuth() {
     const authCode = params.get('code');
     login({ variables: { authCode } })
       .then(({ data: { signinWithGithub: tokens } }) => {
-        console.log(tokens);
-
-        store.user({
+        // return tokens;
+        user({
+          ...user(),
           loggedIn: true,
           accessToken: tokens.accessToken,
-          refreshToken: tokens.refreshToken,
         });
-        window.localStorage.setItem('LOGGED_IN', 'true');
-        nav('/');
+        window.localStorage.setItem('is-logged-in', 'true');
+        nav('/login');
       })
       .catch((error) => {
         // TODO: handle authcode is expired
         console.log(error);
       });
-  }, [login, params]);
+  }, [login, params, nav]);
 
-  // store.user({
-  //   accessToken:
-  // })
-  // login({ variables: { authCode } });
   return <></>;
-  return <Navigate to="/login"></Navigate>;
 }

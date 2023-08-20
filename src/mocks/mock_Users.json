@@ -1,0 +1,32 @@
+[
+    {
+        "uid": "mock_hacho",
+        "name": "hacho",
+        "email": "exam@exam.com",
+        "createdAt": "2019-12-03T09:54:33Z"
+    },
+    {
+        "uid": "mock_jiseop",
+        "name": "jiseop",
+        "email": "exam@exam.com",
+        "createdAt": "2019-12-03T09:54:33Z"
+    },
+    {
+        "uid": "mock_tayeong",
+        "name": "tayeong",
+        "email": "exam@exam.com",
+        "createdAt": "2019-12-03T09:54:33Z"
+    },
+    {
+        "uid": "mock_yongchan",
+        "name": "yongchan",
+        "email": "exam@exam.com",
+        "createdAt": "2019-12-03T09:54:33Z"
+    },
+    {
+        "uid": "mock_wonwoo",
+        "name": "wonwoo",
+        "email": "exam@exam.com",
+        "createdAt": "2019-12-03T09:54:33Z"
+    }
+]

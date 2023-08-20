@@ -1,0 +1,110 @@
+[
+    {
+        "articleID": 1,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 2,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 3,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 4,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 5,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 6,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 7,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 8,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    },
+    {
+        "articleID": 9,
+        "title": "mock_hello",
+        "content": "mock_wow",
+        "description": "desc",
+        "createdAt": "2019-12-03T09:54:33Z",
+        "updatedAt": "2019-12-03T09:54:33Z",
+        "author": {
+            "uid": "mock_hacho",
+            "name": "hacho"
+        }
+    }
+]
