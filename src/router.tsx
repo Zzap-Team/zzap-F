@@ -3,8 +3,9 @@ import Root from './pages/Root';
 import Login, { GithubAuth } from './pages/Login';
 import Post from './pages/Post';
 import Article from './pages/Article';
-import { client } from './apollo';
-import { GITHUB_LOGIN, LOGIN } from './api/graphql';
+import { ProtectRoute } from './components/Utils';
+import { store } from './apollo';
+import Dev from './dev';
 
 const router = createBrowserRouter([
   {
@@ -12,16 +13,28 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
+    path: '/login',
+    element: <Login />,
+  },
+  {
     path: '/login/github',
     element: <GithubAuth />,
   },
   {
     path: '/post',
-    element: <Post />,
+    element: (
+      <ProtectRoute when={false} to="/login/github">
+        <Post />
+      </ProtectRoute>
+    ),
   },
   {
     path: '/article/:id',
     element: <Article />,
+  },
+  {
+    path: '/dev',
+    element: <Dev></Dev>,
   },
 ]);
 

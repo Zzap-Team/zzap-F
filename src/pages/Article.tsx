@@ -2,21 +2,44 @@ import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { GET_ARTICLE } from '../api/graphql';
 import { useQuery } from '@apollo/client';
+import { Main } from './Layout';
+import { formatDate } from '../helper/date';
 
 export default function Article() {
-  const params = useParams();
-  const { data, loading, error } = useQuery(GET_ARTICLE, { variables: { id: params.id } });
-
-  if (loading) return <div>loading...</div>;
+  const { id } = useParams();
+  const { data, loading, error } = useQuery(GET_ARTICLE, { variables: { id: parseInt(id) } });
   if (error) console.log(error);
+  console.log(data);
   return (
-    <ArticleLayout>
-      <Title>{data.article.title}</Title>
-      <Content>{data.article.content}</Content>
-    </ArticleLayout>
+    <Main>
+      {loading || (
+        <ArticleWrapper>
+          <Title>{data.article.title}</Title>
+          <Info>
+            <Name>{`by ${data.article.author.name}`}</Name>
+            <CreateAt>{formatDate(new Date(data.article.createdAt))}</CreateAt>
+          </Info>
+          <Content>{data.article.content}</Content>
+        </ArticleWrapper>
+      )}
+    </Main>
   );
 }
 
-const ArticleLayout = styled.div``;
-const Title = styled.h2``;
-const Content = styled.div``;
+const ArticleWrapper = styled.div`
+  width: 95%;
+`;
+
+const Title = styled.h1``;
+
+const Info = styled.p``;
+
+const Name = styled.span`
+  font-weight: bold;
+`;
+
+const CreateAt = styled.span`
+  margin-left: 1rem;
+`;
+
+const Content = styled.p``;
