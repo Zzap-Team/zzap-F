@@ -1,5 +1,5 @@
-import { gql, useMutation, useReactiveVar } from '@apollo/client';
-import { Navigate, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GET_ME, GITHUB_LOGIN } from '../api/graphql';
 import useAuthQuery from '../hooks/useAuthQuery';
@@ -11,7 +11,6 @@ export default function Login() {
 
   useEffect(() => {
     if (data) {
-      console.log('data!!', data);
       const newUser = {
         ...user(),
         name: data.me.name,

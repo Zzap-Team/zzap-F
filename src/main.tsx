@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { ApolloProvider } from '@apollo/client';
@@ -7,7 +7,7 @@ import { GlobalStyle, theme } from './styles/theme.ts';
 import { client } from './apollo.tsx';
 import { worker } from './mocks/browser';
 
-if (process.env.NODE_ENV === 'development' && import.meta.env.VITE_MSW === 'true') {
+if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
 

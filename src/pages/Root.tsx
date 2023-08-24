@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import { ArticleList } from '../components/ArticleList';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { Main } from './Layout';
 import { user } from '../apollo/store';
@@ -13,31 +12,23 @@ type Article = {
   title: string;
   content: string;
   description: string;
-  author: string;
+  author: { name: string };
   createdAt: string;
-};
-
-type ArticleListProps = {
-  showAdder: boolean;
 };
 
 type ArticleCardProps = {
   articleID: string;
   title: string;
   description: string;
-  author: object;
+  author: string;
   createdAt: string;
 };
 
-const ArticleContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 70rem;
-`;
-
 export default function Root() {
   const { loggedIn } = useReactiveVar(user);
-  const { data, loading, error } = useQuery(GET_ARTICLES);
+  const { data, loading, error } = useQuery(GET_ARTICLES, {
+    fetchPolicy: 'network-only',
+  });
 
   if (loading || error) return <></>;
   const articles = data.articles.articles;

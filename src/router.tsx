@@ -4,8 +4,7 @@ import Login, { GithubAuth } from './pages/Login';
 import Post from './pages/Post';
 import Article from './pages/Article';
 import { ProtectRoute } from './components/Utils';
-import { store } from './apollo';
-import Dev from './dev';
+import { user } from './apollo/store';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: '/post',
     element: (
-      <ProtectRoute when={false} to="/login/github">
+      <ProtectRoute when={() => user().loggedIn === false} to="/">
         <Post />
       </ProtectRoute>
     ),
@@ -31,10 +30,6 @@ const router = createBrowserRouter([
   {
     path: '/article/:id',
     element: <Article />,
-  },
-  {
-    path: '/dev',
-    element: <Dev></Dev>,
   },
 ]);
 

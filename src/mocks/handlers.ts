@@ -61,7 +61,7 @@ export const handlers = [
     );
   }),
 
-  graphql.query('GetArticles', (req, res, ctx) => {
+  graphql.query('GetArticles', (_, res, ctx) => {
     return res(
       ctx.data({
         articles: MOCK_ARTICLES,
