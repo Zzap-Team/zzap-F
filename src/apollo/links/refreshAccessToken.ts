@@ -14,11 +14,7 @@ const client = new ApolloClient({
 const handleExpiredAccessTokenError = onError(({ operation, graphQLErrors, forward }) => {
   if (graphQLErrors) {
     for (const error of graphQLErrors) {
-      if (error.message === 'Refresh token is expired') {
-        console.log('ohmygod, refresh token is dead');
-        break;
-      }
-      if (error.extensions.code === 'UNAUTHENTICATED') {
+      if (error.extensions.code === 'UNAUTHENTICATED' && error.message === 'Access token is expired') {
         operation.setContext({
           ...operation.getContext(),
           refresh: true,
@@ -29,7 +25,7 @@ const handleExpiredAccessTokenError = onError(({ operation, graphQLErrors, forwa
   }
 });
 
-const refresh = setContext(async (operation, prevContext) => {
+const refresh = setContext(async (_, prevContext) => {
   if (prevContext.refresh) {
     const { data, errors } = await client.mutate({ mutation: GET_ACCESSTOKEN, errorPolicy: 'all' });
     if (data) {
@@ -40,7 +36,7 @@ const refresh = setContext(async (operation, prevContext) => {
       });
     } else if (errors) {
       for (const error of errors) {
-        if (error.message == 'Can not find refresh token') {
+        if (error.message == 'Can not find refresh token' || error.message == 'Refresh token is expired') {
           if (prevContext.errorAlert !== 'none') alert('토큰이 만료되었습니다. 다시 로그인 해주세요.');
           user({
             loggedIn: false,

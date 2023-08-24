@@ -7,9 +7,8 @@ import { formatDate } from '../helper/date';
 
 export default function Article() {
   const { id } = useParams();
-  const { data, loading, error } = useQuery(GET_ARTICLE, { variables: { id: parseInt(id) } });
-  if (error) console.log(error);
-  console.log(data);
+  const { data, loading, error } = useQuery(GET_ARTICLE, { variables: { id: id === undefined ? '' : parseInt(id) } });
+  if (error) <></>;
   return (
     <Main>
       {loading || (

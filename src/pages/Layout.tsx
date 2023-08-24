@@ -7,7 +7,11 @@ import { GET_ME, LOGOUT } from '../api/graphql';
 import { user } from '../apollo/store';
 import useAuthMutation from '../hooks/useAuthMutation';
 
-export const Main = ({ children }) => {
+type MainProps = {
+  children: any;
+};
+
+export const Main = ({ children }: MainProps) => {
   return (
     <MainLayout>
       <Header />
@@ -23,7 +27,7 @@ const MainLayout = styled.div`
 `;
 
 const Header = () => {
-  const { data, loading, error } = useAuthQuery(GET_ME, {
+  const { data, loading } = useAuthQuery(GET_ME, {
     context: {
       errorAlert: 'none',
     },

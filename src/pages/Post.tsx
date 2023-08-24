@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { ADD_ARTICLE, GET_ARTICLE, GET_ARTICLES } from '../api/graphql';
+import { ADD_ARTICLE, GET_ARTICLES } from '../api/graphql';
 import { useNavigate } from 'react-router-dom';
 import { Main } from './Layout';
 import useAuthMutation from '../hooks/useAuthMutation';
