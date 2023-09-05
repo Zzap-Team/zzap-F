@@ -18,6 +18,7 @@ export const Main = ({ children }) => {
 
 const MainLayout = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
 `;
@@ -79,18 +80,21 @@ const MyName = styled.a`
   margin-right: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: black;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 1rem;
   font-weight: bold;
-  color: white;
   text-decoration: none;
-
   border-radius: 1rem;
+  color: white;
+  background-color: black;
+  border: solid 1px black;
+  &:hover{
+    color: black;
+    background-color: white;
+    cursor: pointer;
+  }
 `;
 
 const LogoutButton = styled.button`
@@ -98,14 +102,21 @@ const LogoutButton = styled.button`
   /* margin-right: 1rem; */
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: black;
-
+  
   font-size: 1rem;
   font-weight: bold;
-  color: white;
+ 
   text-decoration: none;
 
   border-radius: 1rem;
+  background-color: black;
+  border: solid 1px black;
+  color: white;
+  &:hover{
+    color: black;
+    background-color: white;
+    cursor: pointer;
+  }
 `;
 
 const LoginButton = styled.a`

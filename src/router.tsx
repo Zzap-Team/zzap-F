@@ -29,6 +29,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: '/post/:id',
+    element: (
+      <ProtectRoute when={false} to="/login/github">
+        <Post />
+      </ProtectRoute>
+    ),
+  },
+  {
     path: '/article/:id',
     element: <Article />,
   },

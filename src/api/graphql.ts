@@ -32,15 +32,42 @@ export const GET_ARTICLE = gql`
       articleID
       title
       content
+      description
       createdAt
       updatedAt
       author {
+        name
+      }
+      tags{
         name
       }
     }
   }
 `;
 
+/*
+  용도: 아티클 삭제
+  인자: 아티클 아이디
+  사용 페이지: 아티클  페이지
+*/
+export const DELETE_ARTICLE = gql`
+mutation DeleteArticle($articleID: Int!){
+  deleteArticle(articleID: $articleID)
+}
+`;
+
+/*
+  용도: 아티클 수정
+  인자: 아티클 아이디, 제목, 내용, 설명
+  사용 페이지: 아티클 페이지
+*/
+export const UPDATE_ARTICLE = gql`
+mutation UpdateArticle($articleID: Int!, $title: String!, $content: String, $description: String){
+  updateArticle(updateArticleDTO: { title: $title, content: $content, description: $description}, articleID: $articleID){
+    articleID
+  }
+}
+`;
 /*
   용도: 아티클 작성
   인자: 제목, 내용, 설명
@@ -103,4 +130,26 @@ export const GET_ME = gql`
       name
     }
   }
+`;
+
+export const GET_TAG = gql`
+ query getTag($name: String!){
+  tag(name: $name){
+    name
+  }
+ }
+`;
+
+/*
+  용도: 아티클에 태그 추가
+  인자: id, tag이름
+  사용 페이지: POST 페이지
+  비고: 
+*/
+export const ADD_TAG = gql`
+ mutation addTag($articleID: Int!, $name: String!){
+  addTag(articleID: $articleID, name: $name){
+    articleID
+  }
+ }
 `;

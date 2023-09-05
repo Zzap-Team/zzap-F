@@ -133,7 +133,13 @@ export function AddArticle() {
   const nav = useNavigate();
 
   return (
-    <ArticleCardWrapper onClick={() => nav('post')}>
+    <ArticleCardWrapper onClick={() => nav('post', {
+      state: {
+        title: '',
+        content: '',
+        description: '',
+      }
+    })}>
       <AdderIcon>+</AdderIcon>
     </ArticleCardWrapper>
   );
