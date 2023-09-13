@@ -38,7 +38,7 @@ export default function Post() {
         <Editor>
           <Title type="text" value={title} placeholder="제목을 입력하세요!" onChange={(e) => setTitle(e.target.value)} />
           <Tags>
-            {tags.map((tag) => {
+            {tags && tags.map((tag) => {
               return <Tag>{tag}</Tag>
             })}
             <TagInput
@@ -73,13 +73,13 @@ export default function Post() {
                   },
                 });
                 const article = data.createArticle;
-                id = article.articleID;
+                id = Number(article.articleID);
                 nav(`/article/${article.articleID}`);
                } else{
                 id = Number(location.state.id);
                 const { data } = await updateArticle({
                   variables: {
-                    articleID: Number(location.state.id),
+                    articleID: id,
                     title: title,
                     content: content,
                     description: description,
@@ -167,14 +167,6 @@ const Title = styled.input`
   outline: none;
 `;
 
-const Content = styled.textarea`
-  width: 90%;
-  height: 30rem;
-  font-size: 1rem;
-  margin-left: 6px;
-  background-color: transparent;
-  outline: none;
-`;
 
 const TagInput = styled.input`
   min-width: 50px;

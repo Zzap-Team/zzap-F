@@ -132,10 +132,25 @@ export const GET_ME = gql`
   }
 `;
 
+/*
+  용도: 태그로 아티클 찾기
+  인자: 태그 이름
+  사용 페이지: tags
+*/
 export const GET_TAG = gql`
  query getTag($name: String!){
   tag(name: $name){
     name
+    articles{
+      articleID
+      title
+      content
+      createdAt
+      description
+      tags{
+        name
+      }
+    }
   }
  }
 `;

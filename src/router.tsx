@@ -4,8 +4,8 @@ import Login, { GithubAuth } from './pages/Login';
 import Post from './pages/Post';
 import Article from './pages/Article';
 import { ProtectRoute } from './components/Utils';
-import { store } from './apollo';
 import Dev from './dev';
+import Tagged from './pages/Tagged';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: '/article/:id',
     element: <Article />,
+  },
+  {
+    path: '/tag/:name',
+    element: <Tagged />,
   },
   {
     path: '/dev',

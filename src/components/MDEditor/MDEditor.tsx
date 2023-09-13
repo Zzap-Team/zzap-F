@@ -39,7 +39,6 @@ export function MDEditor({_content, propsFunction}) {
     let newContent = '';
     let checkSymbol ='';
     let addSymbol = '';
-    console.log(cursor, content[cursor.start]);
     if(type=='bold'){
       checkSymbol = '*';
       addSymbol = '**'

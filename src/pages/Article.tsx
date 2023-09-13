@@ -16,9 +16,7 @@ export default function Article() {
     refetchQueries: [GET_ARTICLES],
   });
   if (error) console.log(error);
-  let tags = [];
-  if(!loading)
-    tags = data.article.tags.map((tag) => { return tag.name });
+  let tags = loading ? [] : data.article.tags.map((tag) => { return tag.name });
   const nav = useNavigate();
   return (
     <Main>
@@ -27,7 +25,7 @@ export default function Article() {
           <Title>{data.article.title}</Title>
           <Tags>
               {tags.map((tag) => {
-                return <Tag>{tag}</Tag>
+                return <Tag key={tag} onClick={() => nav(`/tag/${tag}`)}>{tag}</Tag>
               })}
             </Tags>
           <Info>

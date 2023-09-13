@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import { ArticleList } from '../components/ArticleList';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { Main } from './Layout';
 import { user } from '../apollo/store';
@@ -17,9 +16,6 @@ type Article = {
   createdAt: string;
 };
 
-type ArticleListProps = {
-  showAdder: boolean;
-};
 
 type ArticleCardProps = {
   articleID: string;
@@ -28,12 +24,6 @@ type ArticleCardProps = {
   author: object;
   createdAt: string;
 };
-
-const ArticleContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 70rem;
-`;
 
 export default function Root() {
   const { loggedIn } = useReactiveVar(user);
@@ -78,6 +68,22 @@ export function ArticleCard({ articleID, title, author, description, createdAt }
         <Author>{`by ${author}`}</Author>
         <CreatedAt>{formatDate(new Date(createdAt))}</CreatedAt>
       </Info>
+    </ArticleCardWrapper>
+  );
+}
+
+export function AddArticle() {
+  const nav = useNavigate();
+  return (
+    <ArticleCardWrapper onClick={() => nav('post', {
+      state: {
+        title: '',
+        content: '',
+        description: '',
+        tags: [],
+      }
+    })}>
+      <AdderIcon>+</AdderIcon>
     </ArticleCardWrapper>
   );
 }
@@ -129,21 +135,7 @@ const Author = styled.p`
 
 const CreatedAt = styled.p``;
 
-export function AddArticle() {
-  const nav = useNavigate();
 
-  return (
-    <ArticleCardWrapper onClick={() => nav('post', {
-      state: {
-        title: '',
-        content: '',
-        description: '',
-      }
-    })}>
-      <AdderIcon>+</AdderIcon>
-    </ArticleCardWrapper>
-  );
-}
 
 const AdderIcon = styled.span`
   text-align: center;
